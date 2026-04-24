@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ken Field — Field Research</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0d0d0b;
+    --surface: #161613;
+    --border: rgba(245, 235, 210, 0.1);
+    --text: #f0e8d5;
+    --muted: rgba(240, 232, 213, 0.55);
+    --accent: #c8922a;
+    --accent-light: #e8b050;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+    --mono: 'DM Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 17px;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem 3rem;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: rgba(13, 13, 11, 0.92);
+    backdrop-filter: blur(12px);
+    z-index: 100;
+  }
+
+  .nav-name {
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    text-transform: uppercase;
+  }
+
+  .nav-name span {
+    color: var(--accent);
+  }
+
+  .nav-cta a {
+    font-size: 13px;
+    font-family: var(--mono);
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    text-decoration: none;
+    border: 1px solid rgba(200, 146, 42, 0.4);
+    padding: 0.45rem 1.1rem;
+    transition: all 0.2s;
+  }
+
+  .nav-cta a:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
+  /* MAIN WRAPPER */
+  main {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 7rem 0 5rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .hero-eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .hero-eyebrow::after {
+    content: '';
+    display: block;
+    height: 1px;
+    width: 3rem;
+    background: var(--accent);
+    opacity: 0.5;
+  }
+
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(2.8rem, 6vw, 4.4rem);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 2rem;
+    max-width: 720px;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent-light);
+  }
+
+  .hero-body {
+    font-size: 1.1rem;
+    color: var(--muted);
+    max-width: 580px;
+    line-height: 1.8;
+  }
+
+  /* SECTION SHARED */
+  section {
+    padding: 5rem 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .section-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 3rem;
+  }
+
+  /* WRITING */
+  .writing-intro {
+    font-family: var(--serif);
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: var(--text);
+    margin-bottom: 2.5rem;
+    max-width: 640px;
+  }
+
+  .topic-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 2.5rem;
+  }
+
+  .topic-item {
+    background: var(--surface);
+    padding: 1.5rem 1.75rem;
+    transition: background 0.2s;
+  }
+
+  .topic-item:hover {
+    background: rgba(200, 146, 42, 0.06);
+  }
+
+  .topic-marker {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    margin-bottom: 0.5rem;
+    display: block;
+  }
+
+  .topic-item h3 {
+    font-family: var(--sans);
+    font-weight: 500;
+    font-size: 1rem;
+    color: var(--text);
+    margin-bottom: 0.4rem;
+  }
+
+  .topic-item p {
+    font-size: 0.875rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .substack-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 2.5rem;
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(200, 146, 42, 0.3);
+    padding-bottom: 2px;
+    transition: all 0.2s;
+  }
+
+  .substack-link:hover {
+    color: var(--accent-light);
+    border-bottom-color: var(--accent-light);
+  }
+
+  .substack-link::after {
+    content: '→';
+  }
+
+  /* SERVICES */
+  .services-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .service-item {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+    padding: 2.5rem 0;
+    border-bottom: 1px solid var(--border);
+    align-items: start;
+  }
+
+  .service-item:first-child {
+    border-top: 1px solid var(--border);
+  }
+
+  .service-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    padding-top: 0.2rem;
+  }
+
+  .service-name {
+    font-family: var(--serif);
+    font-size: 1.3rem;
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 0.6rem;
+  }
+
+  .service-desc {
+    font-size: 0.95rem;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  .service-right {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ABOUT */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: start;
+  }
+
+  .about-text {
+    font-size: 0.975rem;
+    color: var(--muted);
+    line-height: 1.85;
+  }
+
+  .credential-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .credential-list li {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding-left: 1rem;
+    border-left: 2px solid rgba(200, 146, 42, 0.3);
+  }
+
+  .credential-list li strong {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .credential-list li span {
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-family: var(--mono);
+  }
+
+  /* CONTACT */
+  .contact-section {
+    padding: 5rem 0 4rem;
+    border-bottom: none;
+  }
+
+  .contact-heading {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    font-weight: 400;
+    color: var(--text);
+    margin-bottom: 1rem;
+  }
+
+  .contact-sub {
+    font-size: 1rem;
+    color: var(--muted);
+    margin-bottom: 2.5rem;
+    max-width: 500px;
+  }
+
+  .contact-links {
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .contact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--mono);
+    font-size: 13px;
+    letter-spacing: 0.05em;
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid;
+    transition: all 0.2s;
+  }
+
+  .contact-link.primary {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+    font-weight: 400;
+  }
+
+  .contact-link.primary:hover {
+    background: var(--accent-light);
+    border-color: var(--accent-light);
+  }
+
+  .contact-link.secondary {
+    color: var(--muted);
+    border-color: var(--border);
+  }
+
+  .contact-link.secondary:hover {
+    color: var(--text);
+    border-color: rgba(240, 232, 213, 0.3);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 2rem 3rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 100%;
+  }
+
+  .footer-name {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+
+  .footer-copy {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: rgba(240, 232, 213, 0.25);
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 680px) {
+    nav { padding: 1.5rem; }
+    main { padding: 0 1.5rem; }
+    .hero { padding: 4rem 0 3rem; }
+    .topic-grid { grid-template-columns: 1fr; }
+    .service-item { grid-template-columns: 1fr; gap: 0.5rem; }
+    .about-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 0.5rem; padding: 2rem 1.5rem; }
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-eyebrow { animation: fadeUp 0.5s ease forwards; }
+  .hero h1 { animation: fadeUp 0.6s 0.1s ease both; }
+  .hero-body { animation: fadeUp 0.6s 0.2s ease both; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-name">Ken Field <span>/ Field Research</span></div>
+  <div class="nav-cta"><a href="mailto:ken@fieldresearch.it.com">Get in touch</a></div>
+</nav>
+
+<main>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">Insights &amp; Analytics Consulting</div>
+    <h1>How does <em>marketing</em> know things?</h1>
+    <p class="hero-body">I help marketing organizations make sense of the signals, sources, and systems available to them — and write about what that looks like in practice.</p>
+  </div>
+
+  <!-- WRITING -->
+  <section>
+    <div class="section-label">What I write about</div>
+    <p class="writing-intro"><em>The Knowledge Stack</em> — what marketers know and how they know it. A newsletter covering the signals, systems, and sense-making that drive modern marketing practice.</p>
+
+    <div class="topic-grid">
+      <div class="topic-item">
+        <span class="topic-marker">01</span>
+        <h3>Practitioner Interviews</h3>
+        <p>Conversations with researchers, analysts, and strategists on how they actually navigate signal overload.</p>
+      </div>
+      <div class="topic-item">
+        <span class="topic-marker">02</span>
+        <h3>Explainer Guides</h3>
+        <p>Clear-eyed breakdowns of methodology, statistics, and research design — without the academic fog.</p>
+      </div>
+      <div class="topic-item">
+        <span class="topic-marker">03</span>
+        <h3>Technology Deep Dives</h3>
+        <p>Honest assessments of research and analytics tools — what they do, what they don't, and what to watch for.</p>
+      </div>
+      <div class="topic-item">
+        <span class="topic-marker">04</span>
+        <h3>Perspectives &amp; Analysis</h3>
+        <p>Points of view on the trends, debates, and ideas shaping how marketing organizations understand their world.</p>
+      </div>
+    </div>
+
+    <a class="substack-link" href="https://substack.com/@kenjfield" target="_blank">Read The Knowledge Stack on Substack</a>
+  </section>
+
+  <!-- SERVICES -->
+  <section>
+    <div class="section-label">Working together</div>
+    <div class="services-list">
+
+      <div class="service-item">
+        <div class="service-num">01</div>
+        <div class="service-right">
+          <div class="service-name">Research Project Consulting</div>
+          <p class="service-desc">Independent support for custom research — study design, vendor selection, analysis, and strategic interpretation. Bring me in as a sounding board or a full project partner.</p>
+        </div>
+      </div>
+
+      <div class="service-item">
+        <div class="service-num">02</div>
+        <div class="service-right">
+          <div class="service-name">Ghostwriting &amp; Case Studies</div>
+          <p class="service-desc">Private case studies, white papers, and thought leadership written in your voice. I understand research methodology — so the technical detail is right, and the narrative lands.</p>
+        </div>
+      </div>
+
+      <div class="service-item">
+        <div class="service-num">03</div>
+        <div class="service-right">
+          <div class="service-name">Technology Solutions Consulting</div>
+          <p class="service-desc">Helping research and marketing teams find, evaluate, and deploy the right technology. I work with a select group of best-in-class technology partners and can help you assess fit, scope implementation, and get to value faster.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- TECHNOLOGY PARTNERS -->
+  <section>
+    <div class="section-label">Technology partners</div>
+    <div class="services-list">
+
+      <div class="service-item">
+        <div class="service-num" style="padding-top: 0.5rem;">&#9670;</div>
+        <div class="service-right">
+          <div class="service-name">Scalafai</div>
+          <p class="service-desc">An AI-powered research operations platform that automates the coordination, scripting, and delivery of quantitative research projects. Built for research teams that want to move faster without sacrificing rigor.</p>
+        </div>
+      </div>
+
+      <div class="service-item">
+        <div class="service-num" style="padding-top: 0.5rem;">&#9670;</div>
+        <div class="service-right">
+          <div class="service-name">Arima Data</div>
+          <p class="service-desc">A synthetic population platform that enables marketers to model, segment, and activate consumer insights at scale. Arima's SynC methodology generates privacy-safe synthetic data grounded in real population distributions.</p>
+        </div>
+      </div>
+
+    </div>
+
+  <!-- ABOUT -->
+  <section>
+    <div class="section-label">Background</div>
+    <div class="about-grid">
+      <p class="about-text">I've spent my career at the intersection of research, strategy, and technology — leading insight functions, building analytics products, and helping organizations think more rigorously about what they know and why they know it.<br><br>Field Research is my independent practice. I work with a small number of clients at a time, which means you get my full attention.</p>
+      <ul class="credential-list">
+        <li>
+          <strong>SVP Research Technology</strong>
+          <span>Explorer Research (Savanta)</span>
+        </li>
+        <li>
+          <strong>Director, Syndicated Research</strong>
+          <span>Ipsos Canada</span>
+        </li>
+        <li>
+          <strong>Master of Management Analytics</strong>
+          <span>Queen's University</span>
+        </li>
+        <li>
+          <strong>Technology Partnerships</strong>
+          <span>Scalafai · Arima Data</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact-section">
+    <div class="section-label">Contact</div>
+    <h2 class="contact-heading">Let's talk.</h2>
+    <p class="contact-sub">Whether you need a research partner, a writer who understands the methodology, or help finding the right technology — reach out and we'll figure out if I'm the right fit.</p>
+    <div class="contact-links">
+      <a class="contact-link primary" href="mailto:ken@fieldresearch.it.com">ken@fieldresearch.it.com →</a>
+      <a class="contact-link secondary" href="https://www.linkedin.com/in/kenjfield/" target="_blank">LinkedIn</a>
+      <a class="contact-link secondary" href="https://substack.com/@kenjfield" target="_blank">The Knowledge Stack</a>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="footer-name">Field Research / Rapport Research Inc.</div>
+  <div class="footer-copy">© 2025</div>
+</footer>
+
+</body>
+</html>
